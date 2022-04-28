@@ -5,8 +5,10 @@ int opponentTurn(){
     return rnumber;
 }
 
-
-
 void Main(){
 
+    int turn = opponentTurn();
+    Console.WriteLine(turn);
 }
+
+Main();
