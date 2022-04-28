@@ -1,17 +1,25 @@
-﻿
+﻿int turnStarter(){
+    Random rnd = new Random();
+    int flip = rnd.Next(1,2);
+    return flip;
+}
+
 int opponentTurn(){
+    Console.WriteLine("Oppenent's Turn");
     Random rnd = new Random();
     int rnumber = rnd.Next(1,9);
     return rnumber;
 }
 int yourTurn(){
-    Console.Write("Pick a number between 1 and 9: ");
-    string userInput = Console.ReadLine();
+    string userInput = "-1";
+    while(userInput != "1" && userInput != "2" && userInput != "3"  && userInput != "4"  && userInput != "5"  && userInput != "6"  && userInput != "7"  && userInput != "8" && userInput != "9"){
+        Console.WriteLine("Your Turn");
+        Console.Write("Pick a number between 1 and 9: ");
+        userInput = Console.ReadLine();
+    }
     int yTurn = int.Parse(userInput);
     return yTurn;
-
-}
-
+    }
 void board(string one, string two, string three, string four, string five, string six, string seven, string eight, string nine){
     Console.WriteLine($"{one}|{two}|{three}\n-+-+-\n{four}|{five}|{six}\n-+-+-\n{seven}|{eight}|{nine}");
     return;
@@ -28,14 +36,32 @@ void Main(){
     string seven = "7";
     string eight = "8";
     string nine = "9";
-    board(one, two, three, four, five, six, seven, eight, nine);
-    string symbol = "X";
+    string symbol = " ";
+    int turn = 0;
+    List<int> usedNumbers = new List<int>();
+    Console.WriteLine("Lets play some Tic-Tack-Toe!");
+    int whoseTurn = turnStarter();
     bool win = false;
-    //for(int i = 0; i < 5; i++){
+    bool tie = false;
     while(win == false){
-    //one==two & one==three & one == symbol | four==five & four==six & four == symbol | seven==eight & seven==nine & seven == symbol | one==four & one==seven & one == symbol | two==five & two==eight & two == symbol | three==six & three==nine & three == symbol | one==five & one==nine & one == symbol | three==five & three==seven & three == symbol ){
-        int turn = opponentTurn();
-        Console.WriteLine(turn);
+        if (usedNumbers.Count == 9){
+            tie = true;
+            break;
+        }
+        if(whoseTurn % 2 == 0){
+            while (usedNumbers.Contains(turn)){
+            turn = yourTurn();
+            }
+            symbol = "X";
+
+        }
+        else{
+            while (usedNumbers.Contains(turn)){
+            turn = opponentTurn();
+            }
+            symbol = "O";
+        }
+        usedNumbers.Add(turn);
         switch(turn){
             case 1:
             one = symbol;
@@ -78,11 +104,18 @@ void Main(){
         if(one==two & one==three & one == symbol | four==five & four==six & four == symbol | seven==eight & seven==nine & seven == symbol | one==four & one==seven & one == symbol | two==five & two==eight & two == symbol | three==six & three==nine & three == symbol | one==five & one==nine & one == symbol | three==five & three==seven & three == symbol){
             win = true;
         }
+        ++ whoseTurn;
 
     }
-    Console.WriteLine("You Win!");
-    //int xturn = yourTurn();
-    //Console.WriteLine(xturn);
+    if(tie == true){
+        Console.WriteLine("Tie.");
+    }
+    else if(symbol == "X"){
+        Console.WriteLine("You Win!");
+    }
+    else{
+        Console.WriteLine("You Lose...");
+    }
 }
 
 Main();
