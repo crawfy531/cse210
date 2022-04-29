@@ -1,4 +1,8 @@
-﻿int turnStarter(){
+﻿//cse210-01
+//Ponder 1
+//Jennifer Crawford
+
+int turnStarter(){
     Random rnd = new Random();
     int flip = rnd.Next(1,2);
     return flip;
